@@ -13,7 +13,7 @@ import java.util.Scanner;
 @SpringBootApplication
 public class SpringDataApplication implements CommandLineRunner {
 
-	private final CrudRoleService roleService;
+	private CrudRoleService roleService;
 
 	private Boolean system = true;
 
@@ -35,13 +35,12 @@ public class SpringDataApplication implements CommandLineRunner {
 			System.out.println("1 - Cargo");
 
 			int action = scanner.nextInt();
-			if ( action == 1 )
+			if ( action == 1 ) {
 				roleService.init(scanner);
+			}
 			else
 				system = false;
 		}
-
-
 		scanner.close();
 
 	}
