@@ -33,4 +33,9 @@ public class Role {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Cargo | id - " + id + " | description - " + description;
+    }
 }

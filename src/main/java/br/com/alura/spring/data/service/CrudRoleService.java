@@ -25,15 +25,27 @@ public class CrudRoleService {
             System.out.println("0 - Sair");
             System.out.println("1 - Cadastrar");
             System.out.println("2 - Atualizar");
+            System.out.println("3 - Visualizar");
+            System.out.println("4 - Remover");
 
             int action = scanner.nextInt();
-
-            if ( action == 1 )
-                save(scanner);
-            if ( action == 2 )
-                update(scanner);
-            else
-                system = false;
+            switch (action) {
+                case 1:
+                    save(scanner);
+                    break;
+                case 2:
+                    update(scanner);
+                    break;
+                case 3:
+                    findAll();
+                    break;
+                case 4:
+                    delete(scanner);
+                    break;
+                default:
+                    system = false;
+                    break;
+            }
         }
     }
 
@@ -43,7 +55,7 @@ public class CrudRoleService {
         Role role = new Role();
         role.setDescription(newRole.toUpperCase(Locale.ROOT));
         repository.save(role);
-        System.out.println("Novo cargo cadastrado com sucesso" + System.lineSeparator());
+        System.err.println("Novo cargo cadastrado com sucesso!" + System.lineSeparator());
     }
 
     public void update(Scanner scanner) {
@@ -56,7 +68,21 @@ public class CrudRoleService {
         role.setId(id);
         role.setDescription(newDesc.toUpperCase(Locale.ROOT));
         repository.save(role);
-        System.out.println("Cargo Atualizado");
+        System.err.println("Cargo Atualizado");
+    }
+
+    public void findAll() {
+        System.out.println("* ******** *");
+        Iterable<Role> allRoles = repository.findAll();
+        allRoles.forEach(System.out::println);
+        System.out.println("* ******** *");
+    }
+
+    public void delete(Scanner scanner) {
+        System.out.println(" º Qual o id do cargo a ser removido: ");
+        int idRole = scanner.nextInt();
+        repository.deleteById(idRole);
+        System.err.println(" Cargo removido com sucesso ");
     }
 
 }
