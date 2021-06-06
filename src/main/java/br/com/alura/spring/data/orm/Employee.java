@@ -1,11 +1,14 @@
 package br.com.alura.spring.data.orm;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="employees")
@@ -19,8 +22,15 @@ public class Employee {
     @Column(name="hiring_date")
     private LocalDateTime hiringDate = LocalDateTime.now();
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name="role_id", nullable = false)
     private Role role;
+
+    @Fetch(FetchMode.JOIN)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="employees_unitys", joinColumns = {
+            @JoinColumn(name="fk_employee") }, inverseJoinColumns = { @JoinColumn(name="fk_unity" ) })
+    private List<UnityControl> unityControlList = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -54,9 +64,25 @@ public class Employee {
         this.hiringDate = hiringDate;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
-        return "Funcionario | id - " + id + " | nome - " + name + " | salario - " + salary + " | dataContratação - " +
-                hiringDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss"));
+        return "Funcionario | id - " + id + " | nome - " + name + " | salario - R$" + salary + " | cargo - " + role
+                + " | dataContratação - " + hiringDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss"));
+    }
+
+    public List<UnityControl> getUnityControlList() {
+        return unityControlList;
+    }
+
+    public void setUnityControlList(List<UnityControl> unityControlList) {
+        this.unityControlList = unityControlList;
     }
 }

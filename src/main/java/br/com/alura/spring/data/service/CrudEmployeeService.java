@@ -1,23 +1,30 @@
 package br.com.alura.spring.data.service;
 
 import br.com.alura.spring.data.orm.Employee;
+import br.com.alura.spring.data.orm.Role;
+import br.com.alura.spring.data.orm.UnityControl;
 import br.com.alura.spring.data.repository.EmployeeRepository;
+import br.com.alura.spring.data.repository.RoleRepository;
+import br.com.alura.spring.data.repository.UnityControlRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 @Service
 public class CrudEmployeeService {
 
-    private Boolean system = true;
     private EmployeeRepository employeeRepository;
+    private UnityControlRepository unityControlRepository;
+    private RoleRepository roleRepository;
 
-    public CrudEmployeeService(EmployeeRepository repository) {
-        this.employeeRepository = repository;
+    private Boolean system = true;
+
+    public CrudEmployeeService(EmployeeRepository employeeRepository, UnityControlRepository unityControlRepository,
+                               RoleRepository roleRepository) {
+        this.employeeRepository = employeeRepository;
+        this.unityControlRepository = unityControlRepository;
+        this.roleRepository = roleRepository;
     }
 
     public void init(Scanner scanner) {
@@ -58,12 +65,40 @@ public class CrudEmployeeService {
         System.out.println(" º Insira salario do funcionário: ");
         BigDecimal salary = scanner.nextBigDecimal();
 
+        Role role = role(scanner);
+
         Employee newEmployee = new Employee();
         newEmployee.setName(name.toUpperCase(Locale.ROOT));
         newEmployee.setSalary(salary);
+        newEmployee.setRole(role);
+
+        List<UnityControl> unitys = unitys(scanner);
+        newEmployee.setUnityControlList(unitys);
 
         employeeRepository.save(newEmployee);
         System.out.println(" **Novo funcionário cadastrado com sucesso! ");
+    }
+
+    private Role role(Scanner scanner) {
+        System.out.println(" º Insira o cargoId do funcionário: ");
+        int roleId = scanner.nextInt();
+        Optional<Role> roleRepositoryById = roleRepository.findById(roleId);
+        return roleRepositoryById.get();
+    }
+
+    public List<UnityControl> unitys (Scanner scanner) {
+        List<UnityControl> unityControlList = new ArrayList<>();
+        int unityId;
+        do {
+            System.out.println("Insira o unidadeId para adicionar uma entidade (0 encerra o registro)");
+            unityId = scanner.nextInt();
+            if ( unityId != 0 ) {
+                Optional<UnityControl> unity = unityControlRepository.findById(unityId);
+                unityControlList.add(unity.get());
+            }
+        }while (unityId != 0);
+
+        return unityControlList;
     }
 
     private void update(Scanner scanner) {

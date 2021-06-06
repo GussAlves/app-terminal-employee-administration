@@ -1,6 +1,8 @@
 package br.com.alura.spring.data.orm;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="unity_controls")
@@ -11,6 +13,9 @@ public class UnityControl {
     private Integer id;
     private String description;
     private String address;
+
+    @ManyToMany(mappedBy = "unityControlList", fetch = FetchType.EAGER)
+    private List<Employee> employeeList = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -40,5 +45,13 @@ public class UnityControl {
     public String toString() {
         return " UnityControl | id - " + id + " | description - "
                 + description + " | address - " + address;
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 }

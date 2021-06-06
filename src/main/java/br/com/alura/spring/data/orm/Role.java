@@ -1,6 +1,8 @@
 package br.com.alura.spring.data.orm;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author gussalves
@@ -15,6 +17,9 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String description;
+
+    @OneToMany(mappedBy = "role")
+    private List<Employee> employeeList = new ArrayList<>();
 
     public Role() {    }
 
@@ -36,6 +41,14 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Cargo | id - " + id + " | description - " + description;
+        return description;
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
     }
 }
