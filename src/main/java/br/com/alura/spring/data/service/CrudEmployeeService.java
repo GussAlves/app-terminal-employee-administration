@@ -110,12 +110,14 @@ public class CrudEmployeeService {
         String newName = scanner.next();
         System.out.println(" Insira o novo salario: ");
         BigDecimal newSalary = scanner.nextBigDecimal();
+        Role role = role(scanner);
 
         Employee newEmployee = new Employee();
         newEmployee.setHiringDate(employee.get().getHiringDate());
         newEmployee.setSalary(newSalary);
         newEmployee.setName(newName.toUpperCase(Locale.ROOT));
         newEmployee.setId(employee.get().getId());
+        newEmployee.setRole(role);
 
         employeeRepository.save(newEmployee);
     }
@@ -130,7 +132,8 @@ public class CrudEmployeeService {
     private void remove(Scanner scanner) {
         System.out.println(" º Insira o id do funcionáro: ");
         int id = scanner.nextInt();
-        employeeRepository.deleteById(id);
+        Optional<Employee> employee = employeeRepository.findById(id);
+        employeeRepository.delete(employee.get());
         System.err.println("Funcionário removido com sucesso!");
     }
 

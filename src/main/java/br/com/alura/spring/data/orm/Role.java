@@ -18,9 +18,6 @@ public class Role {
     private Integer id;
     private String description;
 
-    @OneToMany(mappedBy = "role")
-    private List<Employee> employeeList = new ArrayList<>();
-
     public Role() {    }
 
     public Integer getId() {
@@ -44,11 +41,7 @@ public class Role {
         return description;
     }
 
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
+    public String toStringComplete() {
+        return "Cargo ID: " + id + " | NOME: " + description;
     }
 }

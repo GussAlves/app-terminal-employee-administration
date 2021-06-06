@@ -40,7 +40,10 @@ public class ReportService {
     private void findByName(Scanner scanner) {
         System.out.println("Insira o nome do funcionário");
         String byName = scanner.next();
-        List<Employee> employeeList = employeeRepository.findByName(byName);
+
+        // to make the like work correctly you need to be between %
+        String byNameLike = "%" + byName + "%";
+        List<Employee> employeeList = employeeRepository.findByNameLike(byNameLike);
         employeeList.forEach(System.out::println);
     }
 }

@@ -74,7 +74,7 @@ public class CrudRoleService {
     public void findAll() {
         System.out.println("* ******** *");
         Iterable<Role> allRoles = repository.findAll();
-        allRoles.forEach(System.out::println);
+        allRoles.forEach(x -> System.out.println(x.toStringComplete()));
         System.out.println("* ******** *");
     }
 
