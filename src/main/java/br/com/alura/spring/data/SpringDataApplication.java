@@ -38,7 +38,7 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("****** SISTEMA INICIADO ******* ");
+		System.out.print("****** SISTEMA INICIADO ******* ");
 		Scanner scanner = new Scanner(System.in);
 		while(system) {
 			System.out.println(System.lineSeparator() + "Qual você quer executar");

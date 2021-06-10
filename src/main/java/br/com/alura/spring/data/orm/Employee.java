@@ -5,7 +5,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Employee {
     private String name;
     private BigDecimal salary;
     @Column(name="hiring_date")
-    private LocalDateTime hiringDate = LocalDateTime.now();
+    private LocalDate hiringDate = LocalDate.now();
 
     @ManyToOne
     @JoinColumn(name="role_id", nullable = false)
@@ -56,11 +56,11 @@ public class Employee {
         this.salary = salary;
     }
 
-    public LocalDateTime getHiringDate() {
+    public LocalDate getHiringDate() {
         return hiringDate;
     }
 
-    public void setHiringDate(LocalDateTime hiringDate) {
+    public void setHiringDate(LocalDate hiringDate) {
         this.hiringDate = hiringDate;
     }
 
