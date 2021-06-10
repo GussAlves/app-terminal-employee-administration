@@ -6,6 +6,10 @@ import br.com.alura.spring.data.orm.UnityControl;
 import br.com.alura.spring.data.repository.EmployeeRepository;
 import br.com.alura.spring.data.repository.RoleRepository;
 import br.com.alura.spring.data.repository.UnityControlRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -47,7 +51,7 @@ public class CrudEmployeeService {
                     update(scanner);
                     break;
                 case 3:
-                    listAll();
+                    listAll(scanner);
                     break;
                 case 4:
                     remove(scanner);
@@ -122,10 +126,19 @@ public class CrudEmployeeService {
         employeeRepository.save(newEmployee);
     }
 
-    private void listAll() {
+    private void listAll(Scanner scanner) {
         System.out.println("* ********* *");
-        List<Employee> employeeList = employeeRepository.findAll();
-        employeeList.forEach(System.out::println);
+        System.out.println("Qual pagina vc deseja visualizar");
+        Integer page = scanner.nextInt();
+
+        Pageable pageable = PageRequest.of(page, 5, Sort.unsorted());
+        Page<Employee> employeeList = employeeRepository.findAll(pageable);
+
+        System.out.println(employeeList);
+        System.out.println("Pagina atual " + employeeList.getNumber());
+        System.out.println("Total elementos " + employeeList.getTotalElements());
+
+        employeeList.forEach(employee -> System.out.println(employee));
         System.out.println("* ********* *");
     }
 
