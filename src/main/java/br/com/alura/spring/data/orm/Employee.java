@@ -19,6 +19,7 @@ public class Employee {
     private Integer id;
     private String name;
     private BigDecimal salary;
+    
     @Column(name="hiring_date")
     private LocalDate hiringDate = LocalDate.now();
 

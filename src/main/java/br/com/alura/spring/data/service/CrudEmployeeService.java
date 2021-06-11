@@ -129,7 +129,7 @@ public class CrudEmployeeService {
     private void listAll(Scanner scanner) {
         System.out.println("* ********* *");
         System.out.println("Qual pagina vc deseja visualizar");
-        Integer page = scanner.nextInt();
+        int page = scanner.nextInt();
 
         Pageable pageable = PageRequest.of(page, 5, Sort.unsorted());
         Page<Employee> employeeList = employeeRepository.findAll(pageable);
@@ -138,7 +138,7 @@ public class CrudEmployeeService {
         System.out.println("Pagina atual " + employeeList.getNumber());
         System.out.println("Total elementos " + employeeList.getTotalElements());
 
-        employeeList.forEach(employee -> System.out.println(employee));
+        employeeList.forEach(System.out::println);
         System.out.println("* ********* *");
     }
 
