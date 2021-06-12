@@ -75,8 +75,8 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Funcionario | id - " + id + " | nome - " + name + " | salario - R$" + salary + " | cargo - " + role
-                + " | dataContratação - " + hiringDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss"));
+        return "Funcionario | id - " + id + " | nome - " + name + " | salario - R$" + salary +
+                " | dataContratação - " + hiringDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public List<UnityControl> getUnityControlList() {
