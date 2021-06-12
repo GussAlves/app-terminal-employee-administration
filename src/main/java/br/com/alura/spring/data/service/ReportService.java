@@ -56,7 +56,8 @@ public class ReportService {
         // to make the like work correctly you need to be between %
         String byNameLike = "%" + byName + "%";
         List<Employee> employeeList = employeeRepository.findByNameLike(byNameLike);
-        employeeList.forEach(System.out::println);
+        employeeList.forEach(x -> System.out.println(x.getId() + " | " + x.getName() + " | R$" + x.getSalary() + " | " +
+                x.getRole().getDescription()));
     }
 
     private void findByNameOrderBy(Scanner scanner) {
@@ -64,7 +65,8 @@ public class ReportService {
         String byName = scanner.next();
         String byNameLike = "%" + byName + "%";
         List<Employee> employeeList = employeeRepository.findByNameLikeOrderByNameAsc(byNameLike);
-        employeeList.forEach(System.out::println);
+        employeeList.forEach(x -> System.out.println(x.getId() + " | " + x.getName() + " | R$" + x.getSalary() + " | " +
+                x.getRole().getDescription()));
     }
     
     private void findByHiringDate(Scanner scanner) {
@@ -73,7 +75,8 @@ public class ReportService {
         LocalDate localDate = LocalDate.parse(date, formatter);
 
         List<Employee> hiringDateGreater = employeeRepository.findHiringDateGreater(localDate);
-        hiringDateGreater.forEach(System.out::println);
+        hiringDateGreater.forEach(x -> System.out.println(x.getId() + " | " + x.getName() +
+                " | Data contratação: " + x.getHiringDate()));
     }
 
     private void findEmployeeSalary() {
