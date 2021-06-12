@@ -28,4 +28,6 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
             "FROM employees e", nativeQuery = true)
     List<EmployeeProjection> findNameSalary();
 
+    List<Employee> findByRoleId(int integer);
+
 }

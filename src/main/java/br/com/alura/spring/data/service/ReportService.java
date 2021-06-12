@@ -3,6 +3,7 @@ package br.com.alura.spring.data.service;
 import br.com.alura.spring.data.orm.Employee;
 import br.com.alura.spring.data.orm.EmployeeProjection;
 import br.com.alura.spring.data.repository.EmployeeRepository;
+import br.com.alura.spring.data.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,12 +14,15 @@ import java.util.Scanner;
 @Service
 public class ReportService {
 
-    private Boolean system = true;
     private EmployeeRepository employeeRepository;
+    private RoleRepository roleRepository;
+
+    private Boolean system = true;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public ReportService(EmployeeRepository employeeRepository) {
+    public ReportService(EmployeeRepository employeeRepository, RoleRepository roleRepository) {
         this.employeeRepository = employeeRepository;
+        this.roleRepository = roleRepository;
     }
 
     public void init(Scanner scanner) {
@@ -29,7 +33,8 @@ public class ReportService {
             System.out.println("0 - Sair");
             System.out.println("1 - Buscar funcionário por nome");
             System.out.println("2 - Buscar funcionário data contratação");
-            System.out.println("3 - Exibir funcionário formatado");
+            System.out.println("3 - Buscar funcionário formatado");
+            System.out.println("4 - Buscar funcionários por cargo");
 
             int action = scanner.nextInt();
             switch (action) {
@@ -41,6 +46,9 @@ public class ReportService {
                     break;
                 case 3:
                     findEmployeeSalary();
+                    break;
+                case 4:
+                    findForRoleById(scanner);
                     break;
                 default:
                     system = false;
@@ -85,5 +93,14 @@ public class ReportService {
         list.forEach(e -> System.out.println("Funcionários: id: " + e.getId() + " | Nome: " + e.getName() + " | Salario: R$"
                 + e.getSalary()));
         System.out.println("* ********** *");
+    }
+
+    private void findForRoleById(Scanner scanner) {
+        System.out.println("Insira o cargoID da role: ");
+        int roleId = scanner.nextInt();
+
+        List<Employee> byRoleId = employeeRepository.findByRoleId(roleId);
+        byRoleId.forEach(x -> System.out.println("Cargo: "  + x.getRole().getDescription() + " | " + x.getName()
+                + " | R$ " + x.getSalary()));
     }
 }

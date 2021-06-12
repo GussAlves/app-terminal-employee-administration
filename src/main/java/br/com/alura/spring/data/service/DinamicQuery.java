@@ -31,6 +31,4 @@ public class DinamicQuery {
         queryResults.forEach(x -> System.out.println(x.getId() + " | " + x.getName() + " | R$" + x.getSalary() + " | " +
                 x.getRole().getDescription()));
     }
-
-
 }
