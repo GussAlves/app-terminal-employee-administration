@@ -138,7 +138,8 @@ public class CrudEmployeeService {
         System.out.println("Pagina atual " + employeeList.getNumber());
         System.out.println("Total elementos " + employeeList.getTotalElements());
 
-        employeeList.forEach(System.out::println);
+        employeeList.forEach(x -> System.out.println(x.getId() + " | " + x.getName() + " | R$" + x.getSalary() + " | " +
+                x.getRole().getDescription()));
         System.out.println("* ********* *");
     }
 
