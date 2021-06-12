@@ -3,10 +3,7 @@ package br.com.alura.spring.data;
 import br.com.alura.spring.data.orm.Employee;
 import br.com.alura.spring.data.orm.Role;
 import br.com.alura.spring.data.repository.RoleRepository;
-import br.com.alura.spring.data.service.CrudEmployeeService;
-import br.com.alura.spring.data.service.CrudRoleService;
-import br.com.alura.spring.data.service.CrudUnityControlService;
-import br.com.alura.spring.data.service.ReportService;
+import br.com.alura.spring.data.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,6 +14,7 @@ import java.util.Scanner;
 @SpringBootApplication
 public class SpringDataApplication implements CommandLineRunner {
 
+	private DinamicQuery dinamicQuery;
 	private CrudRoleService roleService;
 	private CrudUnityControlService unityControlService;
 	private CrudEmployeeService employeeService;
@@ -24,12 +22,13 @@ public class SpringDataApplication implements CommandLineRunner {
 
 	private Boolean system = true;
 
-	public SpringDataApplication(CrudRoleService roleService, CrudUnityControlService unityControlService,
+	public SpringDataApplication(DinamicQuery dinamicQuery, CrudRoleService roleService, CrudUnityControlService unityControlService,
 								 CrudEmployeeService employeeService, ReportService reportService) {
 		this.unityControlService = unityControlService;
 		this.roleService = roleService;
 		this.employeeService = employeeService;
 		this.reportService = reportService;
+		this.dinamicQuery = dinamicQuery;
 	}
 
 	public static void main(String[] args) {
@@ -47,6 +46,7 @@ public class SpringDataApplication implements CommandLineRunner {
 			System.out.println("2 - Unidade de controle");
 			System.out.println("3 - Funcionario");
 			System.out.println("4 - Ralatórios");
+			System.out.println("5 - Buscas dinamicas");
 
 			int action = scanner.nextInt();
 			switch ( action ) {
@@ -61,6 +61,9 @@ public class SpringDataApplication implements CommandLineRunner {
 					break;
 				case 4:
 					reportService.init(scanner);
+					break;
+				case 5:
+					dinamicQuery.init(scanner);
 					break;
 				default:
 				system = false;
