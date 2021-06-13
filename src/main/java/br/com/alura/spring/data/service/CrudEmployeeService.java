@@ -100,7 +100,7 @@ public class CrudEmployeeService {
                 Optional<UnityControl> unity = unityControlRepository.findById(unityId);
                 unityControlList.add(unity.get());
             }
-        }while (unityId != 0);
+        } while (unityId != 0);
 
         return unityControlList;
     }

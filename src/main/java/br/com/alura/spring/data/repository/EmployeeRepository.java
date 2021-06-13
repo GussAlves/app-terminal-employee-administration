@@ -17,9 +17,7 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 
     List<Employee> findByNameLike(String name);
     List<Employee> findByNameLikeOrderByNameAsc(String name);
-
-    @Query("SELECT e FROM Employee e WHERE e.name = :name AND e.salary >= :salary")
-    List<Employee> findNameSalaryGreaterHiringDate(String name, BigDecimal salary);
+    List<Employee> findByRoleId(int integer);
 
     @Query(value = "SELECT * FROM employees e WHERE e.hiring_date >= :date", nativeQuery = true)
     List<Employee> findHiringDateGreater(LocalDate date);
@@ -27,7 +25,5 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
     @Query(value = "SELECT e.id, e.name, e.salary, e.hiring_date " +
             "FROM employees e", nativeQuery = true)
     List<EmployeeProjection> findNameSalary();
-
-    List<Employee> findByRoleId(int integer);
 
 }
