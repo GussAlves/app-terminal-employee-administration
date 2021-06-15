@@ -22,8 +22,7 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
     @Query(value = "SELECT * FROM employees e WHERE e.hiring_date >= :date", nativeQuery = true)
     List<Employee> findHiringDateGreater(LocalDate date);
 
-    @Query(value = "SELECT e.id, e.name, e.salary, e.hiring_date " +
-            "FROM employees e", nativeQuery = true)
+    @Query(value = "SELECT e.id, e.name, e.salary, e.hiring_date FROM employees e", nativeQuery = true)
     List<EmployeeProjection> findNameSalary();
 
 }
