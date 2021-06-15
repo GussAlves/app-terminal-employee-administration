@@ -1,5 +1,6 @@
 package br.com.alura.spring.data.service;
 
+import br.com.alura.spring.data.component.SanderMailService;
 import br.com.alura.spring.data.orm.Employee;
 import br.com.alura.spring.data.repository.EmployeeRepository;
 import br.com.alura.spring.data.specification.SpecificationEmployee;
@@ -18,9 +19,11 @@ public class DinamicQuery {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     private EmployeeRepository employeeRepository;
+    private SanderMailService sanderMailService;
 
-    public DinamicQuery(EmployeeRepository employeeRepository) {
+    public DinamicQuery(EmployeeRepository employeeRepository, SanderMailService sanderMailService) {
         this.employeeRepository = employeeRepository;
+        this.sanderMailService = sanderMailService;
     }
 
     public void init(Scanner scanner) {
@@ -56,5 +59,7 @@ public class DinamicQuery {
                         .or(SpecificationEmployee.hiringDate(hiringDate))
                 );
         queryResults.forEach(System.out::println);
+
+        sanderMailService.sendMainEmployee(queryResults);
     }
 }

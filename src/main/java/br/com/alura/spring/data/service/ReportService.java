@@ -16,17 +16,12 @@ import java.util.Scanner;
 public class ReportService {
 
     private EmployeeRepository employeeRepository;
-    private RoleRepository roleRepository;
-    private SanderMailService sanderMailService;
 
     private Boolean system = true;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public ReportService(SanderMailService sanderMailService, EmployeeRepository employeeRepository,
-                         RoleRepository roleRepository) {
-        this.employeeRepository = employeeRepository;
-        this.roleRepository = roleRepository;
-        this.sanderMailService = sanderMailService;
+    public ReportService(EmployeeRepository employeeRepositor) {
+        this.employeeRepository = employeeRepositor;
     }
 
     public void init(Scanner scanner) {
@@ -53,9 +48,6 @@ public class ReportService {
                     break;
                 case 4:
                     findForRoleById(scanner);
-                    break;
-                case 5:
-                    sanderMailService.send();
                     break;
                 default:
                     system = false;
